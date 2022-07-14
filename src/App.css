@@ -1,8 +1,8 @@
 .App {
   padding: 2rem 0;
-  border: 2px solid #fff;
+  
   text-align: center;
-  width: 960px;
+  width: 1200px;
   max-width: 95%;
   margin: 5rem auto;
 }
@@ -20,3 +20,13 @@ button:hover {
   cursor: pointer;
   background-color: rgb(98, 98, 233);
 }
+
+/* Cards */
+.cards_grid {
+  width: 95%;
+  margin: 2rem auto 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
