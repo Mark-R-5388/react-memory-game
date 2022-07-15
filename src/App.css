@@ -4,7 +4,7 @@
   text-align: center;
   width: 1200px;
   max-width: 95%;
-  margin: 5rem auto;
+  margin: 0 auto;
 }
 
 button {
@@ -23,7 +23,8 @@ button:hover {
 
 /* Cards */
 .cards_grid {
-  width: 95%;
+  max-width: 95%;
+  width: 1000px;
   margin: 2rem auto 0 auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);

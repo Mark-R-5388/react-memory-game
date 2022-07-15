@@ -7,6 +7,7 @@ function App() {
   const [turn, setTurn] = useState(0);
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
+  const [disabled, setDisabled] = useState(false);
 
   const cardList = [
     { src: "/img/photo-1.jpg", matched: false },
@@ -22,6 +23,8 @@ function App() {
       .sort(() => Math.random() - 0.5)
       .map((card) => ({ ...card, id: Math.random() }));
 
+    setChoiceOne(null);
+    setChoiceTwo(null);
     setCards(shuffledCards);
     setTurn(0);
   };
@@ -33,6 +36,7 @@ function App() {
 
   useEffect(() => {
     if (choiceOne && choiceTwo) {
+      setDisabled(true);
       if (choiceOne.src === choiceTwo.src) {
         setCards((prevCards) => {
           return prevCards.map((card) => {
@@ -43,20 +47,25 @@ function App() {
             }
           });
         });
-        console.log("match");
+
         resetTurn();
       } else {
-        console.log("no match");
-        resetTurn();
+        setTimeout(() => {
+          resetTurn();
+        }, 1000);
       }
     }
   }, [choiceOne, choiceTwo]);
 
-  console.log(cards);
+  useEffect(() => {
+    shuffleCards();
+  }, []);
+
   const resetTurn = () => {
     setChoiceOne(null);
     setChoiceTwo(null);
     setTurn((prevTurns) => prevTurns + 1);
+    setDisabled(false);
   };
 
   const handleChange = () => {
@@ -67,11 +76,18 @@ function App() {
     <div className="App">
       <h1>Memory Game</h1>
       <button onClick={handleChange}>New Game</button>
+      <p>Turn: {turn}</p>
 
       {cards && (
         <div className="cards_grid">
           {cards.map((card) => (
-            <Card handleChoice={handleChoice} key={card.id} card={card} />
+            <Card
+              handleChoice={handleChoice}
+              key={card.id}
+              card={card}
+              flipped={card === choiceOne || card === choiceTwo || card.matched}
+              disabled={disabled}
+            />
           ))}
         </div>
       )}
